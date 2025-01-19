@@ -3,14 +3,18 @@
 A Canvas LMS client application built with Flutter.
 
 ## Getting Started
+Clone the repository and run `flutter pub get` to install the dependencies.
+then run the app with `flutter run`.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+- [x] Chat with AI
+- [x] Flashcards
+- [x] Calendar
+- [x] Assignments
+- [x] Courses
+- [x] Modules
+- [x] Settings
+- [ ] Quiz Submission
+- [ ] Grades
+- [ ] Notifications
+- [ ] Announcements
