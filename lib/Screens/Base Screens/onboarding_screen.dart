@@ -182,10 +182,15 @@ class SetGeminiCredentials extends StatelessWidget {
   }
 }
 
-class FinalPage extends StatelessWidget {
+class FinalPage extends StatefulWidget {
   final PageController pageController;
   const FinalPage({super.key, required this.pageController});
 
+  @override
+  State<FinalPage> createState() => _FinalPageState();
+}
+
+class _FinalPageState extends State<FinalPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -208,27 +213,32 @@ class FinalPage extends StatelessWidget {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              Provider.of<SettingsProvider>(context, listen: false)
-                  .verifyData()
-                  .then((value) {
+              final settingsProvider =
+                  Provider.of<SettingsProvider>(context, listen: false);
+              final calendarProvider =
+                  Provider.of<CalendarProvider>(context, listen: false);
+              final navigator = Navigator.of(context);
+              final messenger = ScaffoldMessenger.of(context);
+              final currentContext = context;
+
+              settingsProvider.verifyData().then((value) {
+                if (!mounted) return;
+
                 if (value['gemini'] ?? false) {
                   if (value['canvas'] ?? false) {
-                    SettingsProvider settingsProvider =
-                        Provider.of<SettingsProvider>(context, listen: false);
                     settingsProvider.settingsData.isFirstTime = false;
                     settingsProvider.settingsData.save();
-                    Provider.of<CalendarProvider>(context, listen: false)
-                        .fetchEvents(context);
-                    Navigator.push(context,
+                    calendarProvider.fetchEvents(currentContext);
+                    navigator.push(
                         MaterialPageRoute(builder: (context) => HomeScreen()));
                   } else {
-                    pageController.jumpToPage(0);
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    widget.pageController.jumpToPage(0);
+                    messenger.showSnackBar(
                         SnackBar(content: Text('Canvas API key is invalid')));
                   }
                 } else {
-                  pageController.jumpToPage(1);
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  widget.pageController.jumpToPage(1);
+                  messenger.showSnackBar(
                       SnackBar(content: Text('Gemini API key is invalid')));
                 }
               });
