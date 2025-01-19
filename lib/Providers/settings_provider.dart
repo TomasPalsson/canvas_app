@@ -1,11 +1,13 @@
 import 'package:canvas_app/Components/loading_enum.dart';
 import 'package:canvas_app/Models/Canvas/canvas_data.dart';
+import 'package:canvas_app/Models/chat/gemini_chat_sender.dart';
 import 'package:canvas_app/Models/settings_data.dart';
+import 'package:canvas_app/Providers/http_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 
-class ThemeProvider extends ChangeNotifier {
+class SettingsProvider extends ChangeNotifier {
   ThemeMode themeMode = ThemeMode.dark;
   LoadingWidget loadingWidget = LoadingWidget.newtonCradle;
   SettingsData settingsData =
@@ -51,6 +53,15 @@ class ThemeProvider extends ChangeNotifier {
     settingsData.openAiApiKey = apiKey;
     notifyListeners();
     settingsData.save();
+  }
+
+  Future<Map<String, bool>> verifyData() async {
+    Map<String, bool> results = {};
+    results['gemini'] =
+        await GeminiChatSender().verifyApiKey(settingsData.geminiApiKey ?? '');
+    results['canvas'] = await HttpProvider().verifyCanvasData(
+        settingsData.canvasBaseUrl ?? '', settingsData.canvasToken ?? '');
+    return results;
   }
 
   ThemeData get darkTheme {

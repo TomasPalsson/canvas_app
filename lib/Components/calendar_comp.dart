@@ -1,5 +1,5 @@
 import 'package:canvas_app/Components/loading_enum.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -118,7 +118,7 @@ class _CalendarCompState extends State<CalendarComp> {
           Expanded(
             child: calendarProvider.isLoading
                 ? Center(
-                    child: Provider.of<ThemeProvider>(context, listen: false)
+                    child: Provider.of<SettingsProvider>(context, listen: false)
                         .loadingWidget
                         .widget,
                   )

@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:canvas_app/Providers/http_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:http/http.dart' as http;
 
 import 'chat_message.dart';
 
 class ChatSender {
-  final ThemeProvider themeProvider = HttpProvider().themeProvider;
+  final SettingsProvider settingsProvider = HttpProvider().settingsProvider;
   List<ChatMessage> messages = [];
   Map<String, String> files = {};
 
@@ -19,7 +19,7 @@ class ChatSender {
 
     final response = await http.post(
         Uri.parse(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${themeProvider.settingsData.geminiApiKey}"),
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${settingsProvider.settingsData.geminiApiKey}"),
         headers: {
           "Content-Type": "application/json",
         },

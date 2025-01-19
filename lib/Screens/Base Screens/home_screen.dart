@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../Providers/calendar_provider.dart';
 import '../../Providers/course_provider.dart';
-import '../../Providers/theme_provider.dart';
+import '../../Providers/settings_provider.dart';
 import '../Calendar/calendar_main.dart';
 import '../Canvas/Course/all_courses_list.dart';
 import 'settings_screen.dart';
@@ -20,8 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-      themeProvider.loadSettings();
+      final settingsProvider =
+          Provider.of<SettingsProvider>(context, listen: false);
+      settingsProvider.loadSettings();
       final courseProvider =
           Provider.of<CourseProvider>(context, listen: false);
       courseProvider.getCourses();

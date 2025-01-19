@@ -63,9 +63,9 @@ class _ChatCourseState extends State<ChatCourse> {
                 }).toList(),
                 onChanged: (ChatModel? newValue) {
                   if (newValue != null) {
-                    final themeProvider = HttpProvider().themeProvider;
+                    final settingsProvider = HttpProvider().settingsProvider;
                     if (newValue == ChatModel.openai &&
-                        themeProvider.settingsData.openAiApiKey == null) {
+                        settingsProvider.settingsData.openAiApiKey == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content:
@@ -75,7 +75,7 @@ class _ChatCourseState extends State<ChatCourse> {
                       return;
                     }
                     if (newValue == ChatModel.gemini &&
-                        themeProvider.settingsData.geminiApiKey == null) {
+                        settingsProvider.settingsData.geminiApiKey == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content:

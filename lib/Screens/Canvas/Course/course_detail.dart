@@ -8,8 +8,8 @@ import '../../../Models/Canvas/course.dart';
 import '../../../Models/Canvas/course_tab.dart';
 import '../../../Providers/assingment_provider.dart';
 import '../../../Providers/module_provider.dart';
+import '../../../Providers/settings_provider.dart';
 import '../../../Providers/tab_provider.dart';
-import '../../../Providers/theme_provider.dart';
 import '../../../Screens/Canvas/Assignments/all_assignments_list.dart';
 import '../../../Screens/Canvas/modules/all_module_list.dart';
 import '../../../Screens/flashcards/flashcard_list_screen.dart';
@@ -122,7 +122,7 @@ class _CourseDetailState extends State<CourseDetail> {
           SizedBox(height: 30),
           loading
               ? Center(
-                  child: Provider.of<ThemeProvider>(context, listen: false)
+                  child: Provider.of<SettingsProvider>(context, listen: false)
                       .loadingWidget
                       .widget,
                 )

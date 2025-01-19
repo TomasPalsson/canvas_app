@@ -23,13 +23,14 @@ class SettingsDataAdapter extends TypeAdapter<SettingsData> {
       canvasBaseUrl: fields[3] as String?,
       geminiApiKey: fields[4] as String?,
       openAiApiKey: fields[5] as String?,
+      isFirstTime: fields[6] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, SettingsData obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.isDarkMode)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class SettingsDataAdapter extends TypeAdapter<SettingsData> {
       ..writeByte(4)
       ..write(obj.geminiApiKey)
       ..writeByte(5)
-      ..write(obj.openAiApiKey);
+      ..write(obj.openAiApiKey)
+      ..writeByte(6)
+      ..write(obj.isFirstTime);
   }
 
   @override

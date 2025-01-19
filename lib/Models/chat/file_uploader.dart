@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:canvas_app/Models/chat/file_upload_response.dart';
 import 'package:canvas_app/Providers/http_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IFileUploader {
@@ -12,18 +11,18 @@ abstract class IFileUploader {
 }
 
 class OpenAIFileUploader implements IFileUploader {
-  final ThemeProvider themeProvider = HttpProvider().themeProvider;
+  final settingsProvider = HttpProvider().settingsProvider;
   static const String _baseUrl = 'https://api.openai.com/v1/files';
 
   @override
   Future<FileUploadResponse> uploadFile(File file) async {
-    if (themeProvider.settingsData.openAiApiKey == null) {
+    if (settingsProvider.settingsData.openAiApiKey == null) {
       throw Exception("OpenAI API key not set");
     }
 
     final request = http.MultipartRequest('POST', Uri.parse(_baseUrl))
       ..headers['Authorization'] =
-          'Bearer ${themeProvider.settingsData.openAiApiKey}'
+          'Bearer ${settingsProvider.settingsData.openAiApiKey}'
       ..fields['purpose'] = 'assistants'
       ..files.add(await http.MultipartFile.fromPath('file', file.path));
 
@@ -40,14 +39,14 @@ class OpenAIFileUploader implements IFileUploader {
 
   @override
   Future<void> deleteFile(String fileId) async {
-    if (themeProvider.settingsData.openAiApiKey == null) {
+    if (settingsProvider.settingsData.openAiApiKey == null) {
       throw Exception("OpenAI API key not set");
     }
 
     final response = await http.delete(
       Uri.parse('$_baseUrl/$fileId'),
       headers: {
-        'Authorization': 'Bearer ${themeProvider.settingsData.openAiApiKey}',
+        'Authorization': 'Bearer ${settingsProvider.settingsData.openAiApiKey}',
       },
     );
 

@@ -23,8 +23,9 @@ import 'Providers/course_provider.dart';
 import 'Providers/flashcard_provider.dart';
 import 'Providers/http_provider.dart';
 import 'Providers/module_provider.dart';
-import 'Providers/theme_provider.dart';
+import 'Providers/settings_provider.dart';
 import 'Screens/Base Screens/home_screen.dart';
+import 'Screens/Base Screens/onboarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,11 +62,17 @@ void main() async {
   final chatProvider = ChatProvider();
   final flashcardGenerator = FlashcardGenerator(chatProvider.geminiSender);
 
+  SettingsProvider getSettings() {
+    SettingsProvider settingsProvider = SettingsProvider();
+    settingsProvider.loadSettings();
+    return settingsProvider;
+  }
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CourseProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => getSettings()),
         ChangeNotifierProvider(create: (_) => AssignmentProvider()),
         ChangeNotifierProvider(create: (_) => CalendarProvider()),
         ChangeNotifierProvider.value(value: chatProvider),
@@ -80,12 +87,17 @@ void main() async {
       child: Builder(
         builder: (context) => MaterialApp(
           title: 'Canvas App V2',
-          theme: Provider.of<ThemeProvider>(context).getTheme(),
+          theme: Provider.of<SettingsProvider>(context).getTheme(),
           debugShowCheckedModeBanner: false,
           home: Builder(
             builder: (context) {
-              ThemeProvider().loadSettings();
+              SettingsProvider().loadSettings();
               HttpProvider().setContext(context);
+              if (Provider.of<SettingsProvider>(context, listen: false)
+                  .settingsData
+                  .isFirstTime) {
+                return OnboardingScreen();
+              }
               return const HomeScreen();
             },
           ),

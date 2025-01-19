@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../Models/base_model.dart';
-import '../Providers/theme_provider.dart';
 import '../Screens/Base Screens/settings_screen.dart';
+import 'settings_provider.dart';
 
 class HttpProvider {
   final Map<Type, Function(Map<String, dynamic>)> _fromJson = {};
@@ -28,14 +28,14 @@ class HttpProvider {
     this.context = context;
   }
 
-  ThemeProvider get themeProvider => context != null
-      ? Provider.of<ThemeProvider>(context!, listen: false)
-      : ThemeProvider();
+  SettingsProvider get settingsProvider => context != null
+      ? Provider.of<SettingsProvider>(context!, listen: false)
+      : SettingsProvider();
 
   // Get a JSON object from the Canvas API.
   // string [urlExtension] is the path to the API endpoint.
   Future<dynamic> getJson(String urlExtension) async {
-    if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
+    if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
         context != null) {
       Fluttertoast.showToast(
           msg: 'Canvas base URL is required. Please configure it in settings.');
@@ -44,13 +44,13 @@ class HttpProvider {
         MaterialPageRoute(builder: (context) => const SettingsScreen()),
       );
 
-      if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
+      if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
         throw Exception(
             'Canvas base URL is required. Please configure it in settings.');
       }
     }
 
-    String baseUrl = themeProvider.settingsData.canvasBaseUrl ?? '';
+    String baseUrl = settingsProvider.settingsData.canvasBaseUrl ?? '';
 
     // Add a trailing slash if it's not already there.
     if (!baseUrl.endsWith('/')) baseUrl += '/';
@@ -65,7 +65,8 @@ class HttpProvider {
     }
 
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer ${themeProvider.settingsData.canvasToken ?? ''}'
+      'Authorization':
+          'Bearer ${settingsProvider.settingsData.canvasToken ?? ''}'
     });
 
     if (response.statusCode == 200) {
@@ -97,7 +98,7 @@ class HttpProvider {
     Uri? url;
 
     // Check if the Canvas base URL is set.
-    if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
+    if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
         context != null) {
       Fluttertoast.showToast(
           msg: 'Canvas base URL is required. Please configure it in settings.');
@@ -105,13 +106,13 @@ class HttpProvider {
         context!,
         MaterialPageRoute(builder: (context) => const SettingsScreen()),
       );
-      if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
+      if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
         throw Exception(
             'Canvas base URL is required. Please configure it in settings.');
       }
     }
 
-    String baseUrl = themeProvider.settingsData.canvasBaseUrl ?? '';
+    String baseUrl = settingsProvider.settingsData.canvasBaseUrl ?? '';
     if (!urlExtension.startsWith('/')) urlExtension = '/$urlExtension';
 
     try {
@@ -130,14 +131,14 @@ class HttpProvider {
 
     // Loop through the pages of the API call.
     while (url != null) {
-      if (themeProvider.settingsData.canvasToken?.isEmpty != false) {
+      if (settingsProvider.settingsData.canvasToken?.isEmpty != false) {
         throw Exception(
             'Canvas API key is not set. Please configure it in settings.');
       }
 
       final response = await http.get(url, headers: {
         'Authorization':
-            'Bearer ${themeProvider.settingsData.canvasToken ?? ''}'
+            'Bearer ${settingsProvider.settingsData.canvasToken ?? ''}'
       });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -162,7 +163,7 @@ class HttpProvider {
         );
       } else {
         throw Exception(
-            'Failed to fetch data code: ${response.statusCode} ${baseUrl + urlExtension} key = ${themeProvider.settingsData.canvasToken}');
+            'Failed to fetch data code: ${response.statusCode} ${baseUrl + urlExtension} key = ${settingsProvider.settingsData.canvasToken}');
       }
     }
     return data;
@@ -189,7 +190,7 @@ class HttpProvider {
   // [body] is the JSON object to post.
   Future<dynamic> post(String urlExtension,
       {Map<String, dynamic>? body}) async {
-    if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
+    if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false &&
         context != null) {
       Fluttertoast.showToast(
           msg: 'Canvas base URL is required. Please configure it in settings.');
@@ -197,13 +198,13 @@ class HttpProvider {
         context!,
         MaterialPageRoute(builder: (context) => const SettingsScreen()),
       );
-      if (themeProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
+      if (settingsProvider.settingsData.canvasBaseUrl?.isEmpty != false) {
         throw Exception(
             'Canvas base URL is required. Please configure it in settings.');
       }
     }
 
-    String baseUrl = themeProvider.settingsData.canvasBaseUrl ?? '';
+    String baseUrl = settingsProvider.settingsData.canvasBaseUrl ?? '';
     if (!baseUrl.endsWith('/')) baseUrl += '/';
     if (urlExtension.startsWith('/')) urlExtension = urlExtension.substring(1);
 
@@ -214,7 +215,7 @@ class HttpProvider {
       url,
       headers: {
         'Authorization':
-            'Bearer ${themeProvider.settingsData.canvasToken ?? ''}',
+            'Bearer ${settingsProvider.settingsData.canvasToken ?? ''}',
         'Content-Type': 'application/json',
       },
       body: jsonEncode(body ?? {}),
@@ -238,7 +239,7 @@ class HttpProvider {
       Map<String, dynamic> additionalParams) async {
     var request = http.MultipartRequest('POST', Uri.parse(uploadUrl))
       ..headers['Authorization'] =
-          'Bearer ${themeProvider.settingsData.canvasToken ?? ''}'
+          'Bearer ${settingsProvider.settingsData.canvasToken ?? ''}'
       ..files.add(await http.MultipartFile.fromPath('file', file.path));
 
     additionalParams.forEach((key, value) {
@@ -249,5 +250,15 @@ class HttpProvider {
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Failed to upload file: ${response.statusCode}');
     }
+  }
+
+  Future<bool> verifyCanvasData(
+      String canvasBaseUrl, String canvasToken) async {
+    final response =
+        await http.get(Uri.parse("$canvasBaseUrl/api/v1/courses"), headers: {
+      'Authorization': 'Bearer $canvasToken',
+      'Content-Type': 'application/json',
+    });
+    return response.statusCode == 200;
   }
 }

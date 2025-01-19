@@ -25,10 +25,10 @@ class TabProvider {
       id = tab.id;
     }
     var link = Uri.parse(
-        "${HttpProvider().themeProvider.settingsData.canvasBaseUrl}/api/v1/courses/${tab.course?.id}/external_tools/sessionless_launch?id=$id");
+        "${HttpProvider().settingsProvider.settingsData.canvasBaseUrl}/api/v1/courses/${tab.course?.id}/external_tools/sessionless_launch?id=$id");
     var response = await http.get(link, headers: {
       'Authorization':
-          'Bearer ${HttpProvider().themeProvider.settingsData.canvasToken}',
+          'Bearer ${HttpProvider().settingsProvider.settingsData.canvasToken}',
     });
 
     var url = jsonDecode(response.body)['url'];

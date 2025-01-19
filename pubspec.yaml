@@ -48,7 +48,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^28.1.37
   fluttertoast: ^8.2.10
   flutter_markdown: ^0.7.5
-  file_picker: ^6.1.1
+  file_picker: ^8.1.7
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
 

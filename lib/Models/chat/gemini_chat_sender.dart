@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:canvas_app/Providers/http_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
 import 'package:http/http.dart' as http;
 
 import 'base_chat_sender.dart';
@@ -11,15 +10,15 @@ import 'chat_message.dart';
 class GeminiChatSender extends BaseChatSender {
   @override
   Future<String> sendMessage(String message) async {
-    final ThemeProvider themeProvider = HttpProvider().themeProvider;
+    final settingsProvider = HttpProvider().settingsProvider;
     ChatMessage userMessage =
         ChatMessage(role: "user", content: message, files: Map.from(files));
     messages.add(userMessage);
 
-    print("Key: ${themeProvider.settingsData.geminiApiKey}");
+    print("Key: ${settingsProvider.settingsData.geminiApiKey}");
     final response = await http.post(
         Uri.parse(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${themeProvider.settingsData.geminiApiKey}"),
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${settingsProvider.settingsData.geminiApiKey}"),
         headers: {
           "Content-Type": "application/json",
         },
@@ -47,6 +46,30 @@ class GeminiChatSender extends BaseChatSender {
     } else {
       throw Exception(
           "Failed to send message: ${response.statusCode} ${response.body}");
+    }
+  }
+
+  Future<bool> verifyApiKey(String apiKey) async {
+    final response = await http.post(
+        Uri.parse(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          'model': 'gemini-1.5-flash',
+          "contents": [
+            {
+              "parts": [
+                {"text": "Hello, how are you?"}
+              ]
+            }
+          ]
+        }));
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
