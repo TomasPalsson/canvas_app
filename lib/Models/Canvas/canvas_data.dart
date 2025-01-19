@@ -1,6 +1,6 @@
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 
 class CanvasData {
-  get baseUrl => ThemeProvider().settingsData.canvasBaseUrl ?? '';
-  get apiKey => ThemeProvider().settingsData.canvasToken ?? '';
+  get baseUrl => SettingsProvider().settingsData.canvasBaseUrl ?? '';
+  get apiKey => SettingsProvider().settingsData.canvasToken ?? '';
 }

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../Components/settings_comp.dart';
 import '../../Components/settings_input.dart';
-import '../../Providers/theme_provider.dart';
+import '../../Providers/settings_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -14,8 +14,8 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+      body: Consumer<SettingsProvider>(
+        builder: (context, SettingsProvider, child) {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -29,19 +29,19 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SettingsInput(
                 label: 'Canvas Base URL',
-                value: themeProvider.settingsData.canvasBaseUrl ?? '',
+                value: SettingsProvider.settingsData.canvasBaseUrl ?? '',
                 onChanged: (value) {
-                  themeProvider.settingsData.canvasBaseUrl = value;
-                  themeProvider.settingsData.save();
+                  SettingsProvider.settingsData.canvasBaseUrl = value;
+                  SettingsProvider.settingsData.save();
                 },
               ),
               const SizedBox(height: 8),
               SettingsInput(
                 label: 'Canvas Token',
-                value: themeProvider.settingsData.canvasToken ?? '',
+                value: SettingsProvider.settingsData.canvasToken ?? '',
                 onChanged: (value) {
-                  themeProvider.settingsData.canvasToken = value;
-                  themeProvider.settingsData.save();
+                  SettingsProvider.settingsData.canvasToken = value;
+                  SettingsProvider.settingsData.save();
                 },
                 isPassword: true,
               ),
@@ -56,20 +56,20 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SettingsInput(
                 label: 'Gemini API Key',
-                value: themeProvider.settingsData.geminiApiKey ?? '',
+                value: SettingsProvider.settingsData.geminiApiKey ?? '',
                 onChanged: (value) {
-                  themeProvider.settingsData.geminiApiKey = value;
-                  themeProvider.settingsData.save();
+                  SettingsProvider.settingsData.geminiApiKey = value;
+                  SettingsProvider.settingsData.save();
                 },
                 isPassword: true,
               ),
               const SizedBox(height: 8),
               SettingsInput(
                 label: 'OpenAI API Key',
-                value: themeProvider.settingsData.openAiApiKey ?? '',
+                value: SettingsProvider.settingsData.openAiApiKey ?? '',
                 onChanged: (value) {
-                  themeProvider.settingsData.openAiApiKey = value;
-                  themeProvider.settingsData.save();
+                  SettingsProvider.settingsData.openAiApiKey = value;
+                  SettingsProvider.settingsData.save();
                 },
                 isPassword: true,
               ),
@@ -84,10 +84,10 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               SettingsComp(
                 title: 'Dark Mode',
-                value: themeProvider.settingsData.isDarkMode,
+                value: SettingsProvider.settingsData.isDarkMode,
                 onChanged: (value) {
-                  themeProvider.settingsData.isDarkMode = value;
-                  themeProvider.settingsData.save();
+                  SettingsProvider.settingsData.isDarkMode = value;
+                  SettingsProvider.settingsData.save();
                 },
               ),
             ],

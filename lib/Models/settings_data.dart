@@ -23,6 +23,9 @@ class SettingsData extends HiveObject {
   @HiveField(5)
   String? openAiApiKey;
 
+  @HiveField(6)
+  bool isFirstTime;
+
   SettingsData({
     required this.isDarkMode,
     required this.loadingWidget,
@@ -30,6 +33,7 @@ class SettingsData extends HiveObject {
     this.canvasBaseUrl,
     this.geminiApiKey,
     this.openAiApiKey,
+    this.isFirstTime = true,
   });
 
   @override

@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:canvas_app/Providers/http_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
 import 'package:http/http.dart' as http;
 
 import 'base_chat_sender.dart';
 import 'chat_message.dart';
 
 class OpenAIChatSender extends BaseChatSender {
-  final ThemeProvider themeProvider = HttpProvider().themeProvider;
+  final settingsProvider = HttpProvider().settingsProvider;
   static const String _baseUrl = 'https://api.openai.com/v1/chat/completions';
   static const String _defaultModel = 'gpt-4-turbo-preview';
   static const String _visionModel = 'gpt-4-vision-preview';
@@ -55,7 +54,7 @@ class OpenAIChatSender extends BaseChatSender {
 
   @override
   Future<String> sendMessage(String message) async {
-    if (themeProvider.settingsData.openAiApiKey == null) {
+    if (settingsProvider.settingsData.openAiApiKey == null) {
       throw Exception("OpenAI API key not set");
     }
     print("Sending with openai");
@@ -73,7 +72,7 @@ class OpenAIChatSender extends BaseChatSender {
       Uri.parse(_baseUrl),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${themeProvider.settingsData.openAiApiKey}",
+        "Authorization": "Bearer ${settingsProvider.settingsData.openAiApiKey}",
       },
       body: jsonEncode({
         "model": useVisionModel ? _visionModel : _defaultModel,

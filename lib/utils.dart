@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:canvas_app/Models/Canvas/module_item.dart';
 import 'package:canvas_app/Providers/http_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as html;
 import 'package:http/http.dart' as http;
@@ -23,11 +23,11 @@ class FileUtils {
   // Fetch a file from Canvas and return it as a base64 encoded string.
   // string [url] is the URL to fetch the file from.
   static Future<Map<String, String>> fetchFileAsBase64(String url) async {
-    ThemeProvider themeProvider = HttpProvider().themeProvider;
+    SettingsProvider settingsProvider = HttpProvider().settingsProvider;
     final firstResponse = await http.get(
       Uri.parse(url),
       headers: {
-        'Authorization': 'Bearer ${themeProvider.settingsData.canvasToken}',
+        'Authorization': 'Bearer ${settingsProvider.settingsData.canvasToken}',
       },
     );
     var decodedResponse = jsonDecode(firstResponse.body);
@@ -38,7 +38,8 @@ class FileUtils {
         final response = await http.get(
           Uri.parse(decodedResponse['url']),
           headers: {
-            'Authorization': 'Bearer ${themeProvider.settingsData.canvasToken}',
+            'Authorization':
+                'Bearer ${settingsProvider.settingsData.canvasToken}',
           },
         );
         if (response.statusCode == 200) {
@@ -59,10 +60,10 @@ class FileUtils {
   static Future<Map<String, String>> fetchPageAsBase64(
       String url, String name) async {
     Map<String, String> data = {};
-    ThemeProvider themeProvider = HttpProvider().themeProvider;
+    SettingsProvider settingsProvider = HttpProvider().settingsProvider;
 
     final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Bearer ${themeProvider.settingsData.canvasToken}',
+      'Authorization': 'Bearer ${settingsProvider.settingsData.canvasToken}',
     });
     if (response.statusCode == 200) {
       var pageBytes = response.bodyBytes;
@@ -110,9 +111,9 @@ class FileUtils {
   // Fetch a file from Canvas and return it as a base64 encoded string.
   // string [url] is the URL to fetch the file from.
   static Future<Map<String, String>> fetchFileAsBase64Single(String url) async {
-    ThemeProvider themeProvider = HttpProvider().themeProvider;
+    SettingsProvider settingsProvider = HttpProvider().settingsProvider;
     final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Bearer ${themeProvider.settingsData.canvasToken}',
+      'Authorization': 'Bearer ${settingsProvider.settingsData.canvasToken}',
     });
     if (response.statusCode == 200) {
       return {"$url.pdf": base64Encode(response.bodyBytes)};

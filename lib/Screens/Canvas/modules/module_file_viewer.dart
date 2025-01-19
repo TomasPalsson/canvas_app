@@ -1,7 +1,7 @@
 import 'package:canvas_app/Components/loading_enum.dart';
 import 'package:canvas_app/Models/Canvas/module_item.dart';
 import 'package:canvas_app/Providers/module_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -22,7 +22,7 @@ class ModuleFileViewer extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-                child: context.read<ThemeProvider>().loadingWidget.widget);
+                child: context.read<SettingsProvider>().loadingWidget.widget);
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
