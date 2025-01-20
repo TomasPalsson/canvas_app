@@ -5,9 +5,14 @@ import '../../Components/settings_comp.dart';
 import '../../Components/settings_input.dart';
 import '../../Providers/settings_provider.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +92,17 @@ class SettingsScreen extends StatelessWidget {
                 value: SettingsProvider.settingsData.isDarkMode,
                 onChanged: (value) {
                   SettingsProvider.settingsData.isDarkMode = value;
+                  SettingsProvider.settingsData.save();
+                },
+              ),
+              const SizedBox(height: 8),
+              LoadingWidgetSettingsComp(
+                title: 'Loading Widget',
+                value: SettingsProvider.settingsData.loadingWidget,
+                onChanged: (value) {
+                  setState(() {
+                    SettingsProvider.settingsData.loadingWidget = value;
+                  });
                   SettingsProvider.settingsData.save();
                 },
               ),

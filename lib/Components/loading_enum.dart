@@ -21,7 +21,7 @@ enum LoadingWidget {
 }
 
 extension LoadingWidgetExtension on LoadingWidget {
-  Color get color => Colors.white;
+  Color get color => Colors.blueAccent;
   double get size => 50;
 
   Widget get widget {

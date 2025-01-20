@@ -13,6 +13,7 @@ import '../../../Providers/tab_provider.dart';
 import '../../../Screens/Canvas/Assignments/all_assignments_list.dart';
 import '../../../Screens/Canvas/modules/all_module_list.dart';
 import '../../../Screens/flashcards/flashcard_list_screen.dart';
+import '../../../Screens/flashcards/quiz_flashcard.dart';
 
 class CourseDetail extends StatefulWidget {
   final Course course;
@@ -68,6 +69,20 @@ class _CourseDetailState extends State<CourseDetail> {
             context,
             MaterialPageRoute(
               builder: (context) => FlashcardListScreen(course: widget.course),
+            ),
+          );
+        },
+        course: widget.course,
+      ),
+      CustomTab(
+        label: 'Quiz Flashcard',
+        icon: Icons.quiz,
+        color: widget.course.color,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QuizFlashcard(course: widget.course),
             ),
           );
         },
