@@ -23,7 +23,7 @@ import 'package:canvas_app/Providers/chat/chat_provider.dart' as _i17;
 import 'package:canvas_app/Providers/course_provider.dart' as _i7;
 import 'package:canvas_app/Providers/flashcard_provider.dart' as _i23;
 import 'package:canvas_app/Providers/module_provider.dart' as _i21;
-import 'package:canvas_app/Providers/theme_provider.dart' as _i10;
+import 'package:canvas_app/Providers/settings_provider.dart' as _i10;
 import 'package:flutter/material.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i19;
@@ -216,11 +216,11 @@ class MockCourseProvider extends _i1.Mock implements _i7.CourseProvider {
       );
 }
 
-/// A class which mocks [ThemeProvider].
+/// A class which mocks [SettingsProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockThemeProvider extends _i1.Mock implements _i10.ThemeProvider {
-  MockThemeProvider() {
+class MockSettingsProvider extends _i1.Mock implements _i10.SettingsProvider {
+  MockSettingsProvider() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -356,6 +356,15 @@ class MockThemeProvider extends _i1.Mock implements _i10.ThemeProvider {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i8.Future<Map<String, bool>> verifyData() => (super.noSuchMethod(
+        Invocation.method(
+          #verifyData,
+          [],
+        ),
+        returnValue: _i8.Future<Map<String, bool>>.value(<String, bool>{}),
+      ) as _i8.Future<Map<String, bool>>);
 
   @override
   void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(

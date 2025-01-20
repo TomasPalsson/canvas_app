@@ -6,7 +6,7 @@ import 'package:canvas_app/Providers/chat/chat_provider.dart';
 import 'package:canvas_app/Providers/course_provider.dart';
 import 'package:canvas_app/Providers/flashcard_provider.dart';
 import 'package:canvas_app/Providers/module_provider.dart';
-import 'package:canvas_app/Providers/theme_provider.dart';
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:canvas_app/Screens/Base%20Screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +17,7 @@ import 'test_helpers/mock_providers.mocks.dart';
 
 void main() {
   late MockCourseProvider mockCourseProvider;
-  late MockThemeProvider mockThemeProvider;
+  late MockSettingsProvider mockSettingsProvider;
   late MockAssignmentProvider mockAssignmentProvider;
   late MockCalendarProvider mockCalendarProvider;
   late MockChatProvider mockChatProvider;
@@ -25,12 +25,12 @@ void main() {
   late MockFlashcardProvider mockFlashcardProvider;
 
   void setupDefaultMockBehaviors() {
-    when(mockThemeProvider.getTheme()).thenReturn(ThemeData.light());
+    when(mockSettingsProvider.getTheme()).thenReturn(ThemeData.light());
     when(mockCourseProvider.courses).thenReturn([]);
     when(mockCalendarProvider.getItemsForDay(any)).thenReturn([]);
     when(mockCalendarProvider.isLoading).thenReturn(false);
     when(mockModuleProvider.modules).thenReturn([]);
-    when(mockThemeProvider.settingsData).thenReturn(SettingsData(
+    when(mockSettingsProvider.settingsData).thenReturn(SettingsData(
       isDarkMode: false,
       loadingWidget: LoadingWidget.halfTriangleDot,
     ));
@@ -38,7 +38,7 @@ void main() {
 
   setUp(() {
     mockCourseProvider = MockCourseProvider();
-    mockThemeProvider = MockThemeProvider();
+    mockSettingsProvider = MockSettingsProvider();
     mockAssignmentProvider = MockAssignmentProvider();
     mockCalendarProvider = MockCalendarProvider();
     mockChatProvider = MockChatProvider();
@@ -53,7 +53,8 @@ void main() {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CourseProvider>.value(value: mockCourseProvider),
-        ChangeNotifierProvider<ThemeProvider>.value(value: mockThemeProvider),
+        ChangeNotifierProvider<SettingsProvider>.value(
+            value: mockSettingsProvider),
         ChangeNotifierProvider<AssignmentProvider>.value(
             value: mockAssignmentProvider),
         ChangeNotifierProvider<CalendarProvider>.value(

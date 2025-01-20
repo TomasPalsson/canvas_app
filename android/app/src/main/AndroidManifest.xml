@@ -1,6 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.tomas.canvas_app">
     <application
-        android:label="canvas_app_v2"
+        android:label="Canvas App"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
