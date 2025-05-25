@@ -30,7 +30,3 @@ then run the app with `flutter run`.
 - [x] Courses
 - [x] Modules
 - [x] Settings
-- [ ] Quiz Submission
-- [ ] Grades
-- [ ] Notifications
-- [ ] Announcements
