@@ -12,8 +12,6 @@ Canvas App gives you a clean, fast interface to Canvas—but with an AI layer ba
 | **Chat with your courses** | Ask a question about a reading or assignment—AI pulls relevant context from Canvas and responds naturally |
 | **Study flashcards** | Generates spaced-repetition flashcards from your content or quiz data |
 | **Plan smarter** | Calendar includes AI-estimated difficulty + time commitment |
-| **Track grades** | Spots patterns (e.g. declining quiz scores) and gives quick overviews |
-| **Everything offline-friendly** | Works even when your connection is shaky (uses local cache + async updates)
 
 You don’t need to copy-paste anything from Canvas—this app pulls it all via API and lets the AI do the rest.
 
@@ -44,6 +42,7 @@ You don’t need to copy-paste anything from Canvas—this app pulls it all via 
 - Integrated calendar with Canvas assignments + events
 - AI-estimated task difficulty and time to complete
 - Full support for modules, courses, and assignments
+- Create tasks for each course
 - Light & dark themes with basic customization
 
 ---
@@ -56,14 +55,6 @@ Clone the repo and install dependencies:
 git clone https://github.com/TomasPalsson/canvas_app.git
 cd canvas_app
 flutter pub get
-```
-
-Set your environment variables (or pass as `--dart-define`):
-
-```bash
-export CANVAS_BASE_URL=https://<your-canvas-instance>
-export CANVAS_TOKEN=<your-access-token>
-export OPENAI_KEY=<optional if you use chat>
 ```
 
 Run it:
