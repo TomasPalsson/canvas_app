@@ -85,8 +85,8 @@ void main() async {
         ),
       ],
       child: Builder(
-        builder: (context) => MaterialApp(
-          title: 'Canvas App V2',
+        builder: (context) => MaterialApp(  
+          title: 'Canvas App',
           theme: Provider.of<SettingsProvider>(context).getTheme(),
           debugShowCheckedModeBanner: false,
           home: Builder(

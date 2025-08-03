@@ -24,13 +24,13 @@ class SettingsDataAdapter extends TypeAdapter<SettingsData> {
       geminiApiKey: fields[4] as String?,
       openAiApiKey: fields[5] as String?,
       isFirstTime: fields[6] as bool,
-    );
+    )..currentTerm = fields[7] as int;
   }
 
   @override
   void write(BinaryWriter writer, SettingsData obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.isDarkMode)
       ..writeByte(1)
@@ -44,7 +44,9 @@ class SettingsDataAdapter extends TypeAdapter<SettingsData> {
       ..writeByte(5)
       ..write(obj.openAiApiKey)
       ..writeByte(6)
-      ..write(obj.isFirstTime);
+      ..write(obj.isFirstTime)
+      ..writeByte(7)
+      ..write(obj.currentTerm);
   }
 
   @override

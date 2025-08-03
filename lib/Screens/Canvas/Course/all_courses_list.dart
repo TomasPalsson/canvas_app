@@ -1,3 +1,4 @@
+import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,10 +9,10 @@ class AllCoursesScreen extends StatelessWidget {
   AllCoursesScreen({super.key});
   bool filter = true;
 
-  void filterCourses(CourseProvider provider) {
+  void filterCourses(BuildContext context, CourseProvider provider) {
     filter = !filter;
     if (filter) {
-      provider.filterCourses((course) => course.term == 164);
+      provider.filterCourses((course) => course.term == context.read<SettingsProvider>().settingsData.currentTerm);
     } else {
       provider.filterCourses(null);
     }
@@ -26,6 +27,7 @@ class AllCoursesScreen extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   filterCourses(
+                      context,
                       Provider.of<CourseProvider>(context, listen: false));
                 },
                 icon: Icon(Icons.filter_list))

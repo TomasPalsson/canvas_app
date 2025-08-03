@@ -106,6 +106,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   SettingsProvider.settingsData.save();
                 },
               ),
+              const SizedBox(height: 16),
+              SettingsInput(label: "Term ID", value: SettingsProvider.settingsData.currentTerm.toString(), onChanged: (value) {
+                setState(() {
+                  SettingsProvider.settingsData.currentTerm = int.tryParse(value) ?? SettingsProvider.settingsData.currentTerm;
+                  SettingsProvider.settingsData.save();
+                });
+              })
+
             ],
           );
         },

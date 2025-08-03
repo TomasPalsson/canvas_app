@@ -38,9 +38,10 @@ class ModuleProvider extends ChangeNotifier {
     for (var module in modules) {
       if (module.items is List<ModuleItem>) {
         allItems.addAll(module.items as List<ModuleItem>);
-      } else
+      } else {
         allItems.addAll(
             module.items.map((item) => ModuleItem.fromJson(item)).toList());
+      }
     }
     return allItems;
   }

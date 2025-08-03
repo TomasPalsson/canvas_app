@@ -77,18 +77,6 @@ class SettingsProvider extends ChangeNotifier {
         surface: baseColor,
       ),
       dialogBackgroundColor: baseColor,
-      dialogTheme: DialogTheme(
-        backgroundColor: baseColor,
-        surfaceTintColor: Colors.transparent,
-        titleTextStyle: GoogleFonts.rubik(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Colors.white,
-        ),
-      ),
-      cardTheme: CardTheme(
-        color: jet,
-      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: baseColor,
         selectedItemColor: secondaryColor,

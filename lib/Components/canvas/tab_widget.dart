@@ -20,8 +20,9 @@ class TabWidget extends StatelessWidget {
 
   Widget _buildCourseTab(BuildContext context, CourseTab courseTab) {
     if (courseTab.isHidden ||
-        !isNumeric(courseTab.id.substring(courseTab.id.length - 3)))
+        !isNumeric(courseTab.id.substring(courseTab.id.length - 3))) {
       return SizedBox.shrink();
+    }
     return GestureDetector(
       onTap: courseTab.onTap ??
           () async {

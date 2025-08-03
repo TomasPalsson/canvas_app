@@ -26,6 +26,9 @@ class SettingsData extends HiveObject {
   @HiveField(6)
   bool isFirstTime;
 
+  @HiveField(7)
+  int currentTerm = 164; 
+
   SettingsData({
     required this.isDarkMode,
     required this.loadingWidget,
