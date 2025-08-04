@@ -1,3 +1,4 @@
+import 'package:canvas_app/Components/main_drawer.dart';
 import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class AllCoursesScreen extends StatelessWidget {
                 icon: Icon(Icons.filter_list))
           ],
         ),
+        drawer: MainDrawer(),
         body: Column(
           children: [
             Expanded(

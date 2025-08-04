@@ -1,3 +1,4 @@
+import 'package:canvas_app/Components/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _pages = [
-    SettingsScreen(),
     CalendarMain(),
     AllCoursesScreen(),
   ];
@@ -53,9 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Calendar"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "All Courses"),
         ],
       ),

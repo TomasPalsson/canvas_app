@@ -1,4 +1,5 @@
 import 'package:canvas_app/Components/loading_enum.dart';
+import 'package:canvas_app/Components/main_drawer.dart';
 import 'package:canvas_app/Providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +63,7 @@ class _CalendarCompState extends State<CalendarComp> {
           ),
         ],
       ),
+      drawer: MainDrawer(),
       body: Column(
         children: [
           TableCalendar(

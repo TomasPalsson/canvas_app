@@ -82,6 +82,7 @@ class _FlashcardStudyScreenState extends State<FlashcardStudyScreen> {
 
   Widget _buildCard(Flashcard card) {
     return Card(
+      color: Theme.of(context).cardColor,
       margin: const EdgeInsets.all(16),
       child: InkWell(
         onTap: () {

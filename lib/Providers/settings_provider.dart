@@ -13,9 +13,9 @@ class SettingsProvider extends ChangeNotifier {
   SettingsData settingsData =
       SettingsData(isDarkMode: true, loadingWidget: LoadingWidget.newtonCradle);
 
-  void toggleTheme(bool isDark) {
-    themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    settingsData.isDarkMode = isDark;
+  void toggleTheme() {
+    settingsData.isDarkMode = !settingsData.isDarkMode;
+    themeMode = settingsData.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
     settingsData.save();
   }
@@ -41,6 +41,7 @@ class SettingsProvider extends ChangeNotifier {
   ThemeData getTheme() {
     return themeMode == ThemeMode.dark ? darkTheme : lightTheme;
   }
+
 
   void setCanvasData(CanvasData canvasData) {
     settingsData.canvasBaseUrl = canvasData.baseUrl;
@@ -76,7 +77,19 @@ class SettingsProvider extends ChangeNotifier {
         seedColor: secondaryColor,
         surface: baseColor,
       ),
-      dialogBackgroundColor: baseColor,
+      dialogTheme: DialogThemeData( 
+        backgroundColor: baseColor,
+        titleTextStyle: GoogleFonts.rubik(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+        ),
+        contentTextStyle: GoogleFonts.rubik(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.white.withValues(alpha: 50),
+        ),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: baseColor,
         selectedItemColor: secondaryColor,

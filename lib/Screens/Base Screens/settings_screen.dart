@@ -1,3 +1,4 @@
+import 'package:canvas_app/Components/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
+      drawer: MainDrawer(), 
       body: Consumer<SettingsProvider>(
         builder: (context, SettingsProvider, child) {
           return ListView(
@@ -91,8 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: 'Dark Mode',
                 value: SettingsProvider.settingsData.isDarkMode,
                 onChanged: (value) {
-                  SettingsProvider.settingsData.isDarkMode = value;
-                  SettingsProvider.settingsData.save();
+                  SettingsProvider.toggleTheme();
                 },
               ),
               const SizedBox(height: 8),
